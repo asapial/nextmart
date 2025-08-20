@@ -19,3 +19,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.boxcss{
+  @apply rounded-2xl border-2 border-green-600 shadow-green-500 hover:shadow-md p-5
+}

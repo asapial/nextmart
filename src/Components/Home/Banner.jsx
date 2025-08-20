@@ -5,15 +5,17 @@ import shopAnimation from "../../../public/Animation/Product.json";
 
 const Banner = () => {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-20 bg-gradient-to-r from-[#00ff87] to-[#60efff] rounded-2xl shadow-lg">
-      
+    <section className="flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-20 bg-gradient-to-r from-[#00ff87] to-[#60efff] ">
       {/* Left Side: Text */}
       <div className="max-w-xl text-center md:text-left">
         <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-          Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">NextMart</span>
+          Welcome to{" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
+            NextMart
+          </span>
         </h1>
         <p className="mt-4 text-lg text-white/90">
-          Discover products, explore details, and manage your store with ease.  
+          Discover products, explore details, and manage your store with ease.
           Secure. Simple. Smart.
         </p>
         <div className="mt-6 flex justify-center md:justify-start gap-4">
