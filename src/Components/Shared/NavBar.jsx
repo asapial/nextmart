@@ -9,7 +9,7 @@ const NavBar = () => {
         <Link href={'/addProduct'}> Add Product</Link>
       </li>
       <li>
-        <a>Parent</a>
+               <Link href={'/products'}> All Product</Link>
       </li>
       <li>
         <a>Item 3</a>

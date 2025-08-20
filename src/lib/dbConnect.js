@@ -26,7 +26,7 @@ export async function dbConnect(collectionName) {
     );
 
     return await client.db(process.env.db_name).collection(collectionName);
-  } finally {
+  } catch {
     // Ensures that the client will close when you finish/error
     console.log("Something went wrong, database is not connected")
   }
