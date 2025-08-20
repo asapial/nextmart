@@ -3,16 +3,17 @@ import { useState } from "react";
 // import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import SectionContainer from "@/Utils/SectionContainer";
+import { handleAddProducts } from "./addProduct";
 
 const AddProductPage = () => {
   //   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
+    productName: "",
+    productDescription: "",
+    productPrice: "",
+    productCategory: "",
     image: "",
     stock: "",
   });
@@ -36,6 +37,7 @@ const AddProductPage = () => {
     const catArray=formData.category.split(',');
     formData.category=catArray;
     console.log(formData.category)
+    handleAddProducts(formData)
 
     // try {
     //   const res = await fetch("/api/products", {
