@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SectionContainer from "@/Utils/SectionContainer";
 import { handleAddProducts } from "./addProduct";
+import { ErrorToast, SuccessToast } from "@/Utils/ToastMaker";
 
 const AddProductPage = () => {
   //   const { data: session, status } = useSession();
@@ -36,36 +37,16 @@ const AddProductPage = () => {
 
     const catArray=formData.category.split(',');
     formData.category=catArray;
-    console.log(formData.category)
-    handleAddProducts(formData)
 
-    // try {
-    //   const res = await fetch("/api/products", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(formData),
-    //   });
+    const res= await handleAddProducts(formData)
 
-    //   if (res.ok) {
-    //     alert("✅ Product added successfully!");
-    //     setFormData({
-    //       name: "",
-    //       description: "",
-    //       price: "",
-    //       category: "",
-    //       image: "",
-    //       stock: "",
-    //     });
-    //     router.push("/products"); // Redirect after success
-    //   } else {
-    //     alert("❌ Failed to add product.");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   alert("⚠️ Something went wrong.");
-    // } finally {
-    //   setLoading(false);
-    // }
+    if(res.success){
+        SuccessToast("Product is added successfully");
+    }
+    else
+    {
+        ErrorToast("Something went wrong , product is not added");
+    }
   };
 
 
