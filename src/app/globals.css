@@ -24,3 +24,11 @@ body {
 .boxcss{
   @apply rounded-2xl border-2 border-green-600 shadow-green-500 hover:shadow-md p-5
 }
+
+.bgnav{
+   @apply bg-base-100 bg-gradient-to-tr from-[#00ff87]/20 via-[#60efff]/20 to-[#00ff87]/20 shadow-md
+}
+
+.bg{
+   @apply bg-base-100 bg-gradient-to-r from-[#00ff87]/10 via-[#60efff]/10 to-[#00ff87]/10
+}

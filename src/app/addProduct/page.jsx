@@ -51,7 +51,7 @@ const AddProductPage = () => {
 
 
   return (
-    <SectionContainer>
+    <SectionContainer className=" bg">
       <section className="max-w-2xl mx-auto py-12 px-6">
         <form
           onSubmit={handleSubmit}

@@ -23,8 +23,8 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <SectionContainer>
-      <section className="max-w-7xl mx-auto px-6 py-12">
+    <SectionContainer className="bg min-h-screen">
+      <section className="max-w-7xl mx-auto px-6 ">
         <h1 className="text-4xl font-bold text-center mb-10">
           🛍️ Explore Our Products
         </h1>
@@ -97,7 +97,7 @@ const ProductsPage = () => {
 
                   {/* Details Button */}
                   <Link
-                    href={`/products/${product.id}`}
+                    href={`/products/${product._id}`}
                     className="inline-block w-full text-center mt-4 px-4 py-2 bg-gradient-to-r from-[#00ff87] to-[#60efff] text-white font-semibold rounded-lg hover:opacity-90 transition"
                   >
                     View Details
