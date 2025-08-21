@@ -45,9 +45,9 @@ const NavBar = () => {
               {menu}
             </ul>
           </div>
-          <a className="btn btn-ghost text-3xl">
+          <div className="btn btn-ghost text-3xl">
             <NamePlate></NamePlate>
-          </a>
+          </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{menu}</ul>

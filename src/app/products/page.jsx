@@ -8,13 +8,16 @@ import Image from "next/image";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   // Fetch products from API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const data = await getTheProducts();
         setProducts(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -22,9 +25,13 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
+  if(loading){
+    return <h1>Loading...</h1>
+  }
+
   return (
-    <SectionContainer className="bg min-h-screen">
-      <section className="max-w-7xl mx-auto px-6 ">
+    <SectionContainer>
+      <section className="max-w-7xl mx-auto px-6 py-12">
         <h1 className="text-4xl font-bold text-center mb-10">
           🛍️ Explore Our Products
         </h1>
@@ -34,11 +41,11 @@ const ProductsPage = () => {
             No products available. Add some!
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {products.map((product) => (
               <div
-                key={product._id}
-                className="bg-white boxcss"
+                key={product.id}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition"
               >
                 {/* Product Image */}
                 {product.image ? (
@@ -47,6 +54,7 @@ const ProductsPage = () => {
                     alt={product.name}
                     width={300}
                     height={400}
+                    
                   />
                 ) : (
                   <div className="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400">
@@ -60,16 +68,7 @@ const ProductsPage = () => {
 
                   {/* Category */}
                   <p className="flex items-center gap-2 text-sm text-gray-500">
-                    <FaTag className="text-[#00b86b]" />
-                    {product.category &&
-                      product.category.map((item, index) => (
-                        <button
-                          className="px-2 py-1 text-xs bg-gray-200 rounded"
-                          key={index}
-                        >
-                          {item}
-                        </button>
-                      ))}
+                    <FaTag className="text-[#00b86b]" /> {product.category}
                   </p>
 
                   {/* Price */}

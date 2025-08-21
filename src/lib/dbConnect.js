@@ -1,5 +1,6 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri = process.env.db_uri;
+const uri = process.env.NEXT_PUBLIC_db_uri;
+// const uri = "mongodb+srv://NextMart:5xhvhndcD61p1eqR@cluster0.pzqrt37.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 export const collectionList={
     userCollection:"userCollection",
@@ -25,7 +26,8 @@ export async function dbConnect(collectionName) {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
 
-    return await client.db(process.env.db_name).collection(collectionName);
+    return await client.db(process.env.NEXT_PUBLIC_db_name).collection(collectionName);
+    // return await client.db("NextMart").collection(collectionName);
   } catch {
     // Ensures that the client will close when you finish/error
     console.log("Something went wrong, database is not connected")
