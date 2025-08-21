@@ -9,26 +9,25 @@ import {
   FaUser,
   FaBoxOpen,
   FaCog,
+  FaPen,
 } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 const DashboardLayout = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const menuLink = (
     <>
       <li className="flex items-center gap-2 px-4 py-2 hover:bg-green-700 cursor-pointer">
-        <Link href={"/dashboard/addProduct"} className="flex items-center justify-center gap-5">
-          <FaHome /> {!isCollapsed && "Home"}
+        <Link href={"/dashboard"} className="flex items-center justify-center gap-5">
+          <MdDashboard /> {!isCollapsed && "Dashboard"}
         </Link>
       </li>
       <li className="flex items-center gap-2 px-4 py-2 hover:bg-green-700 cursor-pointer">
-        <FaUser /> {!isCollapsed && "Users"}
+        <Link href={"/dashboard/addProduct"} className="flex items-center justify-center gap-5">
+          <FaPen /> {!isCollapsed && "Add Product"}
+        </Link>
       </li>
-      <li className="flex items-center gap-2 px-4 py-2 hover:bg-green-700 cursor-pointer">
-        <FaBoxOpen /> {!isCollapsed && "Products"}
-      </li>
-      <li className="flex items-center gap-2 px-4 py-2 hover:bg-green-700 cursor-pointer">
-        <FaCog /> {!isCollapsed && "Settings"}
-      </li>
+
     </>
   );
 

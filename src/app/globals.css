@@ -30,7 +30,7 @@ body {
 }
 
 .bg{
-   @apply bg-base-100 bg-gradient-to-r from-[#00ff87] via-[#60efff] to-[#00ff87]
+   @apply bg-base-100 bg-gradient-to-r from-[#00ff87]/10 via-[#60efff]/10 to-[#00ff87]/10
 }
 
 .btncss{
