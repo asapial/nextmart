@@ -1,9 +1,11 @@
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/Components/Shared/NavBar";
 import Footer from "@/Components/Shared/Footer";
 import "../Components/NamePlate/NamePlate.css";
 import { ToastContainer } from "react-toastify";
+import { SessionProvider } from "next-auth/react";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -15,13 +17,13 @@ import { ToastContainer } from "react-toastify";
 //   subsets: ["latin"],
 // });
 
-export const metadata = {
-  title: "NextMart",
-  description: "NextMart – Where products meet simplicity.",
-  icons: {
-    icon: "/Logo/market.png",
-  },
-};
+// export const metadata = {
+//   title: "NextMart",
+//   description: "NextMart – Where products meet simplicity.",
+//   icons: {
+//     icon: "/Logo/market.png",
+//   },
+// };
 
 export default function RootLayout({ children }) {
   return (
@@ -29,6 +31,9 @@ export default function RootLayout({ children }) {
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      <SessionProvider>
+
+     
         <NavBar></NavBar>
         {children}
         <Footer></Footer>
@@ -44,6 +49,7 @@ export default function RootLayout({ children }) {
           pauseOnHover
           theme="light"
         />
+       </SessionProvider>
       </body>
     </html>
   );

@@ -4,15 +4,43 @@ import { FcGoogle } from "react-icons/fc";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { motion } from "framer-motion";
+import { ErrorToast, SuccessToast } from "@/Utils/ToastMaker";
+import { signIn } from "next-auth/react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 🔐 Handle email/password login (your server logic here)
     console.log("Email:", email, "Password:", password);
+
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+        callbackUrl: "/",
+      });
+
+      console.log("Result from signin page:", result);
+
+      if (result?.error) {
+        // ❌ Login failed
+        ErrorToast("Invalid email or password");
+      } else if (result?.ok) {
+        // ✅ Login success
+        SuccessToast("Login successful!");
+        // Redirect manually if needed
+        window.location.href = result.url || "/";
+      } else {
+        // ⚠️ Unexpected case
+        ErrorToast("Something went wrong, please try again");
+      }
+    } catch (err) {
+      console.error("Signin error:", err);
+      ErrorToast(err.message || "Something went wrong");
+    }
   };
 
   const handleGoogleSignIn = () => {

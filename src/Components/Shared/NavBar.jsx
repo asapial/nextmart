@@ -1,15 +1,20 @@
+"use client";
 import React from "react";
 import NamePlate from "../NamePlate/NamePlate";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const NavBar = () => {
+
+  const session=useSession();
+  console.log(session);
   const menu = (
     <>
       <li>
-        <Link href={'/addProduct'}> Add Product</Link>
+        <Link href={"/addProduct"}> Add Product</Link>
       </li>
       <li>
-               <Link href={'/products'}> All Product</Link>
+        <Link href={"/products"}> All Product</Link>
       </li>
       <li>
         <a>Item 3</a>
@@ -53,8 +58,32 @@ const NavBar = () => {
           <ul className="menu menu-horizontal px-1">{menu}</ul>
         </div>
         <div className="navbar-end">
-          <Link className="btn btn-primary" href={'/authentication/register'}>Register</Link>
-          <Link className="btn btn-secondary" href={'/authentication/signin'}>Login</Link>
+          <Link className="btn btn-primary" href={"/authentication/register"}>
+            Register
+          </Link>
+          <Link className="btn btn-secondary" href={"/authentication/signin"}>
+            Login
+          </Link>
+
+                    <div className="tooltip  tooltip-bottom">
+            <div className="tooltip-content">
+              <div className="animate-bounce text-orange-400 -rotate-10 text-2xl font-black">
+                {session?.data?.user?.name}
+              </div>
+            </div>
+            <button className="">
+              <div className="avatar">
+                <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+                  <img
+                    src={`${
+                      session?.data?.user?.image ||
+                      "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
+                    }`}
+                  />
+                </div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

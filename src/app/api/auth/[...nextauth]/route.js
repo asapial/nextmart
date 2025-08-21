@@ -1,33 +1,83 @@
+import { collectionList, dbConnect } from "@/lib/dbConnect";
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
-
+// ✅ Auth options
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "Please enter the email..." },
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "Please enter your email",
+        },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        console.log(credentials);
+      async authorize(credentials) {
+        console.log("Credentials received:", credentials);
 
-        // Return null if user data could not be retrieved
-        return null;
+        // Connect to DB and find user
+        const user = await (
+          await dbConnect(collectionList.userCollection)
+        ).findOne({ email: credentials.email });
+
+        console.log(user);
+        if (!user) {
+          return null; // Invalid email
+        }
+
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isValid) {
+          return null; // Invalid password
+        }
+
+        // ✅ Return a plain object containing user info
+        return {
+          id: user._id.toString(), // MongoDB _id as string
+          name: user.fullName,
+          email: user.email,
+          image: user.image,
+
+        };
       },
     }),
-    
   ],
-    pages: {
-    signIn: '/authentication/signin',
-
-  }
+  pages: {
+    signIn: "/authentication/signin", // custom signin page
+  },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    // Add user info to JWT token
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.role = user.role;
+      }
+      return token;
+    },
+    // Add user info to session object
+    async session({ session, token }) {
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.role = token.role;
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
-export default NextAuth(authOptions);
+// ✅ Named exports for App Router
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
