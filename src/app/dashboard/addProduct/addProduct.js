@@ -2,18 +2,15 @@
 
 import { collectionList, dbConnect } from "@/lib/dbConnect";
 
-const handleAddProducts=async (payload)=>{
+const handleAddProducts = async (payload) => {
+  try {
+    const db = await dbConnect(collectionList.productCollection);
+    const res = await db.insertOne(payload);
+    if (res.acknowledged) return { success: true };
+  } catch (error) {
+    console.error("Error adding product:", error);
+  }
+  return { success: false };
+};
 
-    try {
-        const res=await (await dbConnect(collectionList.productCollection)).insertOne(payload);
-        if(res.acknowledged){
-            return {success:true};
-        }
-    } catch (error) {
-        return {success:false};
-    }
-
-    console.log("payload form :" , payload);
-}
-
-export  {handleAddProducts};
+export { handleAddProducts };

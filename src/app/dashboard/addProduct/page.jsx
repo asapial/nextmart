@@ -1,29 +1,22 @@
 "use client";
 import { useState } from "react";
-// import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import SectionContainer from "@/Utils/SectionContainer";
-import { handleAddProducts } from "./addProduct";
+
 import { ErrorToast, SuccessToast } from "@/Utils/ToastMaker";
+import { useRouter } from "next/navigation";
+import { handleAddProducts } from "./addProduct";
 
 const AddProductPage = () => {
-  //   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    productName: "",
-    productDescription: "",
-    productPrice: "",
-    productCategory: "",
+    name: "",
+    description: "",
+    price: "",
+    category: "",
     image: "",
     stock: "",
   });
-
-  // Redirect unauthenticated users
-//   if (status === "unauthenticated") {
-//     router.push("/login");
-//     return null;
-//   }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,36 +24,43 @@ const AddProductPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
 
-    console.log(formData);
+    try {
+      const payload = {
+        ...formData,
+        category: formData.category.split(",").map((c) => c.trim()),
+        price: Number(formData.price),
+        stock: Number(formData.stock),
+      };
 
-    const catArray=formData.category.split(',');
-    formData.category=catArray;
+      const res = await handleAddProducts(payload);
 
-    const res= await handleAddProducts(formData)
-
-    if(res.success){
-        SuccessToast("Product is added successfully");
-    }
-    else
-    {
-        ErrorToast("Something went wrong , product is not added");
+      if (res.success) {
+        SuccessToast("Product added successfully!");
+        router.push("/dashboard"); // Redirect after success
+      } else {
+        ErrorToast("Something went wrong. Product not added.");
+      }
+    } catch (error) {
+      ErrorToast("Error: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-
   return (
-    <SectionContainer className="">
+    <SectionContainer>
       <section className="max-w-2xl mx-auto py-12 px-6">
         <form
           onSubmit={handleSubmit}
-          className="bg-base-100 boxcss flex flex-col gap-3"
+          className="bg-base-100 p-6 flex flex-col gap-4 rounded-lg shadow-md"
         >
-          <h1 className="text-3xl font-bold mb-6 text-center">
+          <h1 className="text-3xl font-bold text-center mb-6">
             ➕ Add New Product
           </h1>
-          {/* Product Name */}
+
+          {/** Product Name */}
           <div>
             <label className="block font-medium mb-1">Product Name</label>
             <input
@@ -73,7 +73,7 @@ const AddProductPage = () => {
             />
           </div>
 
-          {/* Product Description */}
+          {/** Description */}
           <div>
             <label className="block font-medium mb-1">Description</label>
             <textarea
@@ -81,12 +81,12 @@ const AddProductPage = () => {
               value={formData.description}
               onChange={handleChange}
               required
-              rows="3"
+              rows={3}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
-            ></textarea>
+            />
           </div>
 
-          {/* Price */}
+          {/** Price */}
           <div>
             <label className="block font-medium mb-1">Price ($)</label>
             <input
@@ -99,7 +99,7 @@ const AddProductPage = () => {
             />
           </div>
 
-          {/* Category */}
+          {/** Category */}
           <div>
             <label className="block font-medium mb-1">Category</label>
             <input
@@ -113,7 +113,7 @@ const AddProductPage = () => {
             />
           </div>
 
-          {/* Image URL */}
+          {/** Image URL */}
           <div>
             <label className="block font-medium mb-1">Image URL</label>
             <input
@@ -127,7 +127,7 @@ const AddProductPage = () => {
             />
           </div>
 
-          {/* Stock Quantity */}
+          {/** Stock */}
           <div>
             <label className="block font-medium mb-1">Stock Quantity</label>
             <input
@@ -140,7 +140,7 @@ const AddProductPage = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          {/** Submit */}
           <button
             type="submit"
             disabled={loading}

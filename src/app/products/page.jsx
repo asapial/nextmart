@@ -26,12 +26,12 @@ const ProductsPage = () => {
 
   if (loading) {
     return (
-      <h1 className="text-center py-20 text-xl font-semibold">Loading...</h1>
+      <h1 className="text-center py-20 text-xl font-semibold"><span className="loading loading-spinner text-secondary"></span></h1>
     );
   }
 
   return (
-    <SectionContainer>
+    <SectionContainer className=" min-h-screen">
       <section className="max-w-7xl mx-auto px-6 py-12">
         <h1 className="text-4xl font-bold text-center mb-10">
           🛍️ Explore Our Products

@@ -94,26 +94,26 @@ export default function SignIn() {
           </button>
         </form>
 
-        {/* Divider */}
+        {/* Divider
         <div className="my-6 flex items-center">
           <div className="h-px flex-1 bg-gray-300"></div>
           <span className="px-3 text-sm text-gray-500">or</span>
           <div className="h-px flex-1 bg-gray-300"></div>
         </div>
 
-        {/* Google Sign In */}
+        Google Sign In
         <button
           onClick={handleGoogleSignIn}
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 py-2 font-semibold text-gray-700 transition hover:bg-gray-100"
         >
           <FcGoogle className="text-2xl" />
           Sign in with Google
-        </button>
+        </button> */}
 
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-gray-500">
           Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <a href="/authentication/register" className="text-blue-600 hover:underline">
             Register
           </a>
         </p>

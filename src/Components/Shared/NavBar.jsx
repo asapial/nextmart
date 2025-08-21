@@ -9,15 +9,18 @@ const NavBar = () => {
   console.log(session);
   const menu = (
     <>
-      <li>
-        <Link href={"/addProduct"}> Add Product</Link>
-      </li>
-      <li>
+          <li>
         <Link href={"/products"}> All Product</Link>
       </li>
+    {
+      session && (
       <li>
-        <a>Item 3</a>
+        <Link href={"/dashboard"}> Dashboard</Link>
       </li>
+      )
+    }
+
+
     </>
   );
   return (

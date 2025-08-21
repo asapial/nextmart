@@ -1,8 +1,7 @@
 import { FaCartPlus } from "react-icons/fa";
-import { MdCategory } from "react-icons/md";
 import { AiOutlineDollarCircle } from "react-icons/ai";
-import { getTheProducts } from "../product";
 import SectionContainer from "@/Utils/SectionContainer";
+import { getTheProducts } from "../product";
 
 // ✅ Fetch single product from DB
 async function getProduct(id) {
@@ -10,7 +9,7 @@ async function getProduct(id) {
   return products.find((p) => p._id === id);
 }
 
-export default async function ProductDetails({ params}) {
+export default async function ProductDetails({ params }) {
   const product = await getProduct(params?.id || "");
 
   if (!product) {
@@ -22,44 +21,62 @@ export default async function ProductDetails({ params}) {
   }
 
   return (
-    <SectionContainer className=" bg min-h-screen">
-      <div className="">
-        <div className="grid md:grid-cols-2 gap-8 bg-white rounded-2xl shadow-lg p-6">
-          {/* Left: Image */}
-          <div className="flex justify-center items-center">
-            {product?.image?.startsWith("http") ? (
-              <img src={product.image} alt={product.name || "Product"} />
-            ) : (
-              <div>No Image</div>
-            )}
-          </div>
+    <SectionContainer className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2 gap-10 p-8">
+        {/* Left: Product Image */}
+        <div className="flex justify-center items-center">
+          {product?.image?.startsWith("http") ? (
+            <img
+              src={product.image}
+              alt={product.name || "Product"}
+              className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-500 object-contain max-h-[500px]"
+            />
+          ) : (
+            <div className="w-full h-64 flex items-center justify-center bg-gray-100 text-gray-400 text-lg rounded-2xl">
+              No Image
+            </div>
+          )}
+        </div>
 
-          {/* Right: Details */}
-          <div className="flex flex-col justify-center space-y-4">
-            <h1 className="text-3xl font-bold text-gray-900">{product?.name}</h1>
-            <p className="text-gray-600">{product?.description}</p>
+        {/* Right: Product Details */}
+        <div className="flex flex-col justify-between space-y-6">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{product?.name}</h1>
+            <p className="text-gray-600 text-lg leading-relaxed">{product?.description}</p>
 
             {/* Category */}
-            <div className="flex items-center gap-2 text-gray-700">
-              <MdCategory className="text-xl text-indigo-600" />
-              <span className="font-medium">Category:</span>
-              <span>{product?.category}</span>
+            <div className="flex flex-wrap gap-3 mt-4">
+              {Array.isArray(product.category)
+                ? product.category.map((cat, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md hover:scale-105 transition-transform cursor-pointer"
+                    >
+                      {cat}
+                    </span>
+                  ))
+                : (
+                  <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">
+                    {product.category}
+                  </span>
+                )}
             </div>
 
             {/* Price */}
-            <div className="flex items-center gap-2 text-gray-700">
+            <div className="flex items-center gap-2 mt-6 text-gray-700">
               <AiOutlineDollarCircle className="text-xl text-green-600" />
-              <span className="font-medium">Price:</span>
-              <span className="text-lg font-semibold text-green-700">
+              <span className="font-medium text-lg">Price:</span>
+              <span className="text-2xl font-bold text-green-700">
                 ${product?.price}
               </span>
             </div>
-
-            {/* Add to Cart */}
-            <button className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl font-medium shadow-md transition-all">
-              <FaCartPlus /> Add to Cart
-            </button>
           </div>
+
+          {/* Add to Cart */}
+          <button className="mt-6 w-full flex items-center justify-center gap-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition-all duration-300 text-lg">
+            <FaCartPlus className="text-xl" />
+            Add to Cart
+          </button>
         </div>
       </div>
     </SectionContainer>

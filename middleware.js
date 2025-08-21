@@ -1,6 +1,11 @@
-// middleware.js
-export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth({
+  pages: {
+    signIn: "/authentication/signin", // redirect if unauthenticated
+  },
+});
 
 export const config = {
-  matcher: ["/dashboard/:path*"], // Protected routes
+  matcher: ["/dashboard/:path*"], // protect all /dashboard routes
 };
