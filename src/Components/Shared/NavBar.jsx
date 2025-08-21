@@ -5,8 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const NavBar = () => {
-
-  const session=useSession();
+  const session = useSession();
   console.log(session);
   const menu = (
     <>
@@ -57,15 +56,15 @@ const NavBar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{menu}</ul>
         </div>
-        <div className="navbar-end">
-          <Link className="btn btn-primary" href={"/authentication/register"}>
+        <div className="navbar-end flex gap-5">
+          <Link className="btncss " href={"/authentication/register"}>
             Register
           </Link>
-          <Link className="btn btn-secondary" href={"/authentication/signin"}>
+          <Link className="btncss" href={"/authentication/signin"}>
             Login
           </Link>
 
-                    <div className="tooltip  tooltip-bottom">
+          <div className="tooltip  tooltip-bottom ">
             <div className="tooltip-content">
               <div className="animate-bounce text-orange-400 -rotate-10 text-2xl font-black">
                 {session?.data?.user?.name}

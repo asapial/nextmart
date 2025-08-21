@@ -32,3 +32,7 @@ body {
 .bg{
    @apply bg-base-100 bg-gradient-to-r from-[#00ff87]/10 via-[#60efff]/10 to-[#00ff87]/10
 }
+
+.btncss{
+  @apply bg-gradient-to-br from-[#00ff87] to-[#60efff] text-white p-3 rounded-2xl hover:scale-105 transition-all duration-500
+}
