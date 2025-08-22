@@ -86,7 +86,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <SectionContainer>
+    <SectionContainer className="bg">
       <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-2xl shadow-xl">
         <h1 className="text-3xl font-bold text-center mb-6">📝 Create Account</h1>
 

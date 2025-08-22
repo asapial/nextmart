@@ -67,7 +67,7 @@ const NavBar = () => {
             Login
           </Link>
 
-          <div className="tooltip  tooltip-bottom ">
+          <div className="tooltip  tooltip-left ">
             <div className="tooltip-content">
               <div className="animate-bounce text-orange-400 -rotate-10 text-2xl font-black">
                 {session?.data?.user?.name}
