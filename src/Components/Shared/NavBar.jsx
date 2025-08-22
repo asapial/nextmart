@@ -9,18 +9,14 @@ const NavBar = () => {
   console.log(session);
   const menu = (
     <>
-          <li>
+      <li>
         <Link href={"/products"}> All Product</Link>
       </li>
-    {
-      session && (
-      <li>
-        <Link href={"/dashboard"}> Dashboard</Link>
-      </li>
-      )
-    }
-
-
+      {session && (
+        <li>
+          <Link href={"/dashboard"}> Dashboard</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -60,12 +56,16 @@ const NavBar = () => {
           <ul className="menu menu-horizontal px-1">{menu}</ul>
         </div>
         <div className="navbar-end flex gap-5">
-          <Link className="btncss " href={"/authentication/register"}>
-            Register
-          </Link>
-          <Link className="btncss" href={"/authentication/signin"}>
-            Login
-          </Link>
+          {session.status!=="authenticated" && (
+            <>
+              <Link className="btncss " href={"/authentication/register"}>
+                Register
+              </Link>
+              <Link className="btncss" href={"/authentication/signin"}>
+                Login
+              </Link>
+            </>
+          )}
 
           <div className="tooltip  tooltip-left ">
             <div className="tooltip-content">

@@ -27,14 +27,14 @@ export default function RegisterPage() {
     if (!file) return;
 
     setUploading(true);
-    ErrorToast("Uploading image..."); // show message while uploading
+    // ErrorToast("Uploading image..."); // show message while uploading
 
     const form = new FormData();
     form.append("image", file);
 
     try {
       const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=336b87a8e01104a790e25482e8b28a58`,
         {
           method: "POST",
           body: form,
@@ -88,9 +88,21 @@ export default function RegisterPage() {
   return (
     <SectionContainer className="bg">
       <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-2xl shadow-xl">
-        <h1 className="text-3xl font-bold text-center mb-6">📝 Create Account</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">
+          📝 Create Account
+        </h1>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
+          <div className=" flex items-center justify-center">
+            {formData.image && (
+              <img
+                src={formData.image}
+                alt="Uploaded"
+                className="mt-3 w-32 h-32 object-cover rounded-full border-4 border-green-500"
+              />
+            )}
+          </div>
+
           {/* Full Name */}
           <div className="flex items-center border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-[#00ff87]">
             <FaUser className="text-gray-400 mr-2" />
@@ -148,21 +160,22 @@ export default function RegisterPage() {
           </div>
 
           {/* Image Upload */}
-          <div className="flex flex-col items-center border rounded-xl px-3 py-4 focus-within:ring-2 focus-within:ring-[#00ff87]">
-            <FaImage className="text-gray-400 text-2xl mb-2" />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="w-full outline-none cursor-pointer"
-            />
-            {uploading && <p className="text-sm text-gray-500 mt-2">Uploading image...</p>}
-            {formData.image && (
-              <img
-                src={formData.image}
-                alt="Uploaded"
-                className="mt-3 w-32 h-32 object-cover rounded-full border"
+
+          <div className="flex items-center border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-[#00ff87]">
+            <div className=" flex items-center">
+              <FaImage className="text-gray-400  mr-2" />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full outline-none cursor-pointer"
               />
+            </div>
+            {uploading && (
+              <p className="text-sm block text-gray-500 mt-2">
+                Uploading image
+                <span className="loading loading-dots loading-xs"></span>
+              </p>
             )}
           </div>
 
@@ -179,7 +192,10 @@ export default function RegisterPage() {
         {/* Login Link */}
         <p className="text-center text-gray-500 mt-4">
           Already have an account?{" "}
-          <a href="/authentication/signin" className="text-[#00ff87] font-medium hover:underline">
+          <a
+            href="/authentication/signin"
+            className="text-[#00ff87] font-medium hover:underline"
+          >
             Login
           </a>
         </p>

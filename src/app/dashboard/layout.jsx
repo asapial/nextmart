@@ -50,7 +50,7 @@ const DashboardLayout = ({ children }) => {
       </li>
       <li className="flex items-center justify-center">
         <button
-          onClick={() => signOut({ callbackUrl: "/login" })}
+          onClick={() => signOut({ callbackUrl: "/authentication/signin" })}
           className="w-[200px] bg-red-500 hover:bg-red-600 text-white font-semibold rounded-2xl py-3 shadow-lg transition-all flex items-center justify-center gap-2"
         >
           <FiLogOut className="text-xl" /> Sign Out

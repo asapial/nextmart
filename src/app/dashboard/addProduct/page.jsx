@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import SectionContainer from "@/Utils/SectionContainer";
-
 import { ErrorToast, SuccessToast } from "@/Utils/ToastMaker";
 import { useRouter } from "next/navigation";
 import { handleAddProducts } from "./addProduct";
@@ -10,12 +9,16 @@ const AddProductPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
+    productName: "",
+    productDescription: "",
+    productPrice: "",
+    productCategory: "",
     image: "",
     stock: "",
+    brand: "",
+    material: "",
+    dimensions: "",
+    warranty: "",
   });
 
   const handleChange = (e) => {
@@ -29,18 +32,20 @@ const AddProductPage = () => {
     try {
       const payload = {
         ...formData,
-        category: formData.category.split(",").map((c) => c.trim()),
-        price: Number(formData.price),
+        productCategory: formData.productCategory
+          .split(",")
+          .map((c) => c.trim()),
+        productPrice: Number(formData.productPrice),
         stock: Number(formData.stock),
       };
 
       const res = await handleAddProducts(payload);
 
       if (res.success) {
-        SuccessToast("Product added successfully!");
-        router.push("/dashboard"); // Redirect after success
+        SuccessToast("✅ Product added successfully!");
+        router.push("/dashboard");
       } else {
-        ErrorToast("Something went wrong. Product not added.");
+        ErrorToast("❌ Something went wrong. Product not added.");
       }
     } catch (error) {
       ErrorToast("Error: " + error.message);
@@ -51,7 +56,7 @@ const AddProductPage = () => {
 
   return (
     <SectionContainer>
-      <section className="max-w-2xl mx-auto py-12 px-6">
+      <section className="max-w-3xl mx-auto py-12 px-6">
         <form
           onSubmit={handleSubmit}
           className="bg-base-100 p-6 flex flex-col gap-4 rounded-lg shadow-md"
@@ -60,60 +65,60 @@ const AddProductPage = () => {
             ➕ Add New Product
           </h1>
 
-          {/** Product Name */}
+          {/* Product Name */}
           <div>
             <label className="block font-medium mb-1">Product Name</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="productName"
+              value={formData.productName}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Description */}
+          {/* Description */}
           <div>
             <label className="block font-medium mb-1">Description</label>
             <textarea
-              name="description"
-              value={formData.description}
+              name="productDescription"
+              value={formData.productDescription}
               onChange={handleChange}
               required
               rows={3}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Price */}
+          {/* Price */}
           <div>
             <label className="block font-medium mb-1">Price ($)</label>
             <input
               type="number"
-              name="price"
-              value={formData.price}
+              name="productPrice"
+              value={formData.productPrice}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Category */}
+          {/* Category */}
           <div>
             <label className="block font-medium mb-1">Category</label>
             <input
               type="text"
-              name="category"
-              value={formData.category}
+              name="productCategory"
+              value={formData.productCategory}
               onChange={handleChange}
-              placeholder="e.g., Electronics, Fashion"
+              placeholder="e.g., Kitchenware, Drinkware, Home Decor"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Image URL */}
+          {/* Image URL */}
           <div>
             <label className="block font-medium mb-1">Image URL</label>
             <input
@@ -123,11 +128,11 @@ const AddProductPage = () => {
               onChange={handleChange}
               placeholder="https://example.com/product.jpg"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Stock */}
+          {/* Stock */}
           <div>
             <label className="block font-medium mb-1">Stock Quantity</label>
             <input
@@ -136,11 +141,63 @@ const AddProductPage = () => {
               value={formData.stock}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ff87]"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
             />
           </div>
 
-          {/** Submit */}
+          {/* Brand */}
+          <div>
+            <label className="block font-medium mb-1">Brand</label>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              placeholder="e.g., HomeEssentials"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
+            />
+          </div>
+
+          {/* Material */}
+          <div>
+            <label className="block font-medium mb-1">Material</label>
+            <input
+              type="text"
+              name="material"
+              value={formData.material}
+              onChange={handleChange}
+              placeholder="e.g., Ceramic, Plastic, Metal"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
+            />
+          </div>
+
+          {/* Dimensions */}
+          <div>
+            <label className="block font-medium mb-1">Dimensions</label>
+            <input
+              type="text"
+              name="dimensions"
+              value={formData.dimensions}
+              onChange={handleChange}
+              placeholder="e.g., 4in x 3.5in x 4in"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
+            />
+          </div>
+
+          {/* Warranty */}
+          <div>
+            <label className="block font-medium mb-1">Warranty</label>
+            <input
+              type="text"
+              name="warranty"
+              value={formData.warranty}
+              onChange={handleChange}
+              placeholder="e.g., 1 year"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#00ff87]"
+            />
+          </div>
+
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
